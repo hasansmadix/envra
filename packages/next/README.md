@@ -35,15 +35,35 @@ Use when you only validate `NEXT_PUBLIC_*` keys and want a module that is safe t
 ```ts
 import { defineNextPublicEnv, url } from "@envra/next";
 
+/** Each key must use `process.env.NEXT_PUBLIC_*` directly — see “Client bundles” below. */
+const nextPublicRuntimeEnv = {
+  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+};
+
 export const publicEnv = defineNextPublicEnv({
   client: {
     NEXT_PUBLIC_APP_URL: url(),
   },
-  runtimeEnv: process.env,
+  runtimeEnv: nextPublicRuntimeEnv,
 });
 ```
 
 For secrets and server-only variables, keep a separate module with `import "server-only"` and `defineNextEnv` (or `defineEnv` from `@envra/core`).
+
+## Client bundles: why not `runtimeEnv: process.env` alone?
+
+Next.js (webpack / Turbopack) **inlines** `NEXT_PUBLIC_*` into the **browser** bundle only when the code contains **static** access such as `process.env.NEXT_PUBLIC_APP_URL`.
+
+If you pass **`process.env` as a whole** to `defineNextPublicEnv` (or any helper that reads keys dynamically), the bundler **cannot** inject those values for the client. At runtime, `publicEnv` may look correct on the server but be **empty or wrong in the browser**, even when `.env` / `.env.local` are set.
+
+**Do this for client-imported env modules:**
+
+- Build `runtimeEnv` as an object with **one explicit property per** `NEXT_PUBLIC_*` key your schema uses (as in the example above), or
+- Read critical values with **direct** `process.env.NEXT_PUBLIC_*` in small modules (e.g. a single API base URL helper) that client code imports.
+
+`runtimeEnv: process.env` remains fine for **server-only** modules (no Client Component import chain), because Node’s `process.env` is complete at runtime.
+
+See also: [Next.js — Bundling Environment Variables for the Browser](https://nextjs.org/docs/app/guides/environment-variables#bundling-environment-variables-for-the-browser).
 
 ## Next.js App Router: server vs client modules
 
