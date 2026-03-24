@@ -1,6 +1,6 @@
 {
   "name": "@envra/core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Define, validate, and safely consume runtime configuration in TypeScript",
   "keywords": [
     "env",
@@ -37,7 +37,10 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "engines": {
     "node": ">=18"
   },

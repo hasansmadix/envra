@@ -1,6 +1,6 @@
 {
   "name": "@envra/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI for envra: check, sync, docs, doctor",
   "keywords": [
     "env",
@@ -25,7 +25,10 @@
   "bin": {
     "envra": "./dist/cli.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "engines": {
     "node": ">=18"
   },

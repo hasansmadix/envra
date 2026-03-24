@@ -1,6 +1,6 @@
 {
   "name": "@envra/next",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Next.js adapter for envra",
   "keywords": [
     "nextjs",
@@ -30,7 +30,10 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "engines": {
     "node": ">=18"
   },

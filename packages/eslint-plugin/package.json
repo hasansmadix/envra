@@ -1,6 +1,6 @@
 {
   "name": "@envra/eslint-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ESLint plugin for envra (no direct process.env)",
   "keywords": [
     "eslint",
@@ -28,7 +28,10 @@
       "require": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "engines": {
     "node": ">=18"
   },
