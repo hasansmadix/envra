@@ -1,6 +1,6 @@
 # @envra/cli
 
-Command-line tools for [envra](https://github.com/hasansmadix/envra): validate `process.env`, generate `.env.example` and `ENVIRONMENT.md`, and run hygiene checks (`doctor`).
+Command-line tools for [envra](https://github.com/hasansmadix/envra): validate env, generate `.env.example` and `ENVIRONMENT.md`, and run hygiene checks (`doctor`).
 
 ## Install
 
@@ -21,7 +21,25 @@ pnpm envra docs   -c ./env.config.ts -o ENVIRONMENT.md
 pnpm envra doctor -c ./env.config.ts
 ```
 
-Export `defineEnv(...)` as `default` or `env`, or export `envraSchema` / `schema` as field builders so the CLI can read the schema.
+Export `defineEnv(...)` as `default` or `env`, or export field builders as `envraSchema`, `schema`, `environmentFields`, or `envFields`.
+
+## `check` and `doctor` — env loading
+
+- **`--env-file <path>`** — repeatable; each file is parsed with [dotenv](https://github.com/motdotla/dotenv) and merged (later overrides earlier). Starts from `process.env`.
+- **`--env-dir <dir>`** — after `--env-file`, loads `<dir>/.env` then `<dir>/.env.<node-env>` if they exist.
+- **`--node-env <name>`** — segment for `.env.<name>` (default: `NODE_ENV` or `development`).
+- **`--env-preset nest`** — sets default `--env-dir` to `env` (matches many Nest `ConfigModule` layouts).
+
+`--profile` / `-p` is the **schema** profile for envra rules (`requiredIn` / `onlyIn`), not the env file name.
+
+## `doctor`
+
+- **`--undeclared <policy>`** — `ignore-system` (default), `all`, or `loaded-only` (only warn on extra keys that appeared in loaded files).
+- **`--json`** — print structured JSON for CI.
+
+## Windows
+
+If `envra` fails when run via `node` on Windows, call the entry file directly, e.g. `node node_modules/@envra/cli/dist/cli.js check -c ./env.config.ts`.
 
 ## Documentation
 

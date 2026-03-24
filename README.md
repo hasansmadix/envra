@@ -93,9 +93,17 @@ pnpm envra doctor -c ./env.config.ts
 
 Loads TypeScript configs via **jiti** (no separate compile step for the config file). Your app should depend on `@envra/core`; add `@envra/cli` as a dev dependency.
 
+Export `defineEnv` as `default` / `env`, or export field builders as `schema`, `environmentFields`, `envraSchema`, or `envFields`.
+
+**`check` / `doctor`** merge env in this order: start from `process.env`, then each `--env-file` (repeatable), then optional `--env-dir` loads `<dir>/.env` and `<dir>/.env.<node-env>`. Use `--env-preset nest` to default `--env-dir` to `env` (common Nest layout). `--node-env` overrides the segment for `.env.<name>` (default: `NODE_ENV` or `development`). **`--profile`** is the **schema** profile (requiredIn / onlyIn), not the file name.
+
+**`doctor --undeclared`**: `ignore-system` (default, skips noisy OS/npm/editor keys), `all`, or `loaded-only` (only keys that came from loaded files).
+
+**`--json`** on `check` / `doctor` prints machine-readable output for CI.
+
 | Command   | Use case                          |
 | --------- | --------------------------------- |
-| `check`   | CI / preflight — validate `process.env` |
+| `check`   | CI / preflight — validate merged env |
 | `sync`    | Regenerate `.env.example`         |
 | `docs`    | Regenerate `ENVIRONMENT.md`      |
 | `doctor`  | Undeclared vars, typos, deprecations, profile rules |
@@ -131,7 +139,7 @@ Treat this as directional; versions and features change over time.
 
 - **Node**: [examples/node-basic](examples/node-basic)
 - **Next.js App Router**: [examples/next-app-router](examples/next-app-router)
-- **NestJS**: [examples/nestjs](examples/nestjs) — `defineEnv` with `options.source` from `ConfigModule.validate`
+- **NestJS**: [examples/nestjs](examples/nestjs) — `defineEnv` with `unknownRecordToEnvSource(config)` in `ConfigModule.validate`
 
 ---
 
@@ -177,8 +185,6 @@ envra/
 
 - Optional Zod bridge package
 - More framework entrypoints
-- Explicit dotenv file as a source (alongside `process.env`)
-- Richer `doctor` policies
 
 ---
 

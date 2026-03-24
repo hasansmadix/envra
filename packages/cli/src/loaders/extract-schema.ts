@@ -18,7 +18,7 @@ export function extractSchemaFromModule(mod: Record<string, unknown>): EnvSchema
     if (s) return s
   }
 
-  for (const key of ['envraSchema', 'schema'] as const) {
+  for (const key of ['envraSchema', 'schema', 'environmentFields', 'envFields'] as const) {
     const map = mod[key]
     if (map && typeof map === 'object' && !Array.isArray(map)) {
       const entries = Object.entries(map as Record<string, unknown>)

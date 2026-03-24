@@ -26,6 +26,20 @@ export const env = defineEnv({
 
 Use `env.values`, `env.get`, `env.has`, and `env.meta`. See the [full documentation](https://github.com/hasansmadix/envra#readme) on GitHub.
 
+## NestJS / `Record<string, unknown>`
+
+`@nestjs/config` passes a plain object into `validate`. Use `unknownRecordToEnvSource` so nested values become JSON strings instead of `[object Object]`:
+
+```ts
+import { defineEnv, unknownRecordToEnvSource } from "@envra/core";
+
+return defineEnv(schema, { source: unknownRecordToEnvSource(config) }).values;
+```
+
+## `runDoctor`
+
+`runDoctor({ schema, env, profile, undeclaredPolicy?: 'all' | 'ignore-system' | 'loaded-only', loadedEnvKeys? })` — use `ignore-system` on developer machines to avoid hundreds of `UNDECLARED_ENV` warnings from OS/shell keys.
+
 ## CLI
 
 For `check`, `sync`, `docs`, and `doctor`, add [`@envra/cli`](https://www.npmjs.com/package/@envra/cli) as a dev dependency.

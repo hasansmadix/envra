@@ -1,6 +1,6 @@
 {
   "name": "@envra/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Define, validate, and safely consume runtime configuration in TypeScript",
   "keywords": [
     "env",

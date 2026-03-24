@@ -1,4 +1,4 @@
-import { defineEnv, str, oneOf } from '@envra/core'
+import { defineEnv, str, unknownRecordToEnvSource, oneOf } from '@envra/core'
 
 /** Field builders only — use in ConfigModule.validate after merging env files */
 export const envraSchema = {
@@ -8,15 +8,12 @@ export const envraSchema = {
 
 /**
  * Nest `ConfigModule.forRoot({ validate })` receives a plain object.
- * Pass it as `source` to defineEnv:
+ * Use `unknownRecordToEnvSource` so numbers/objects are not coerced to `[object Object]`.
  */
 export function validateNestConfig(config: Record<string, unknown>) {
-  const flat: Record<string, string | undefined> = {}
-  for (const [k, v] of Object.entries(config))
-    flat[k] = v === undefined || v === null ? undefined : String(v)
-
+  const source = unknownRecordToEnvSource(config)
   return defineEnv(envraSchema, {
-    source: flat,
-    profile: flat.NODE_ENV ?? 'development',
+    source,
+    profile: source.NODE_ENV ?? 'development',
   }).values
 }

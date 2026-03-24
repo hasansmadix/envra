@@ -24,6 +24,15 @@ pnpm test
 3. Add or update tests when behavior or public API changes.
 4. Ensure `pnpm build` and `pnpm test` pass locally.
 
+### Pre-release check (maintainers)
+
+Before pushing a release or opening the version PR:
+
+1. `pnpm install`
+2. `pnpm build` (or `pnpm run build` from repo root)
+3. `pnpm test`
+4. From `packages/cli`, run `pnpm pack` and confirm `package/package.json` in the tarball lists a real semver for `@envra/core` (not `workspace:*`).
+
 ## Publishing (maintainers)
 
 We use [Changesets](https://github.com/changesets/changesets) for versioning and npm releases of `@envra/*`.
@@ -81,6 +90,37 @@ pnpm exec changeset publish
 ```
 
 Prefer the GitHub Action so versions and git tags stay aligned with changelogs.
+
+### Troubleshooting local `changeset publish`
+
+**`warn Received 404` for `npm info "@envra/..."`**
+
+Often normal: Changesets checks whether the **new** version (e.g. `0.1.1`) is already on the registry; until it is published, that can return 404. Your previous release (e.g. `0.1.0`) can still be live — verify with:
+
+```bash
+npm view @envra/core version
+```
+
+**`packages failed to publish` with no npm error**
+
+Changesets does not always print npm’s stderr. Run one package to see the real code:
+
+```bash
+pnpm build
+pnpm --filter @envra/core publish --access public --no-git-checks
+```
+
+**`npm error code EOTP` (most common after 0.1.0 works)**
+
+Your npm account uses **2FA for publishing**. Non-interactive `changeset publish` cannot prompt for an OTP.
+
+- **Quick:** publish with a fresh code from your authenticator:  
+  `pnpm --filter @envra/core publish --access public --no-git-checks --otp=123456`  
+  (repeat for other packages in order: core → cli, next, eslint-plugin — or use an Automation token below and run `pnpm exec changeset publish` once.)
+- **Better for repeated CLI publishes:** create an [**Automation**](https://docs.npmjs.com/creating-and-viewing-access-tokens#creating-granular-access-tokens-on-the-website) granular access token (publish-capable, no OTP), then `npm login` or set in user `.npmrc`:  
+  `//registry.npmjs.org/:_authToken=npm_yourTokenHere`
+
+GitHub Actions releases use **Trusted Publishing (OIDC)** and do not need this OTP when OIDC is configured on each package.
 
 ### Troubleshooting OIDC
 

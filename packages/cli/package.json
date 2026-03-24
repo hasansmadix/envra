@@ -1,6 +1,6 @@
 {
   "name": "@envra/cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "CLI for envra: check, sync, docs, doctor",
   "keywords": [
     "env",
@@ -39,6 +39,7 @@
   "dependencies": {
     "@envra/core": "workspace:*",
     "commander": "^12.1.0",
+    "dotenv": "^17.2.3",
     "jiti": "^2.4.2"
   },
   "devDependencies": {

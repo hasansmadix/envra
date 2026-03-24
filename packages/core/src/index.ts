@@ -21,7 +21,14 @@ export type { FieldMeta } from './metadata/field-meta'
 export type { EnvSource } from './runtime/resolve-source'
 export { recordToEnvSource, processEnvSource } from './runtime/resolve-source'
 export { validateSchema, type ValidateSchemaResult } from './runtime/validate-schema'
-export { runDoctor, allDeclaredKeys } from './doctor'
+export {
+  runDoctor,
+  allDeclaredKeys,
+  type RunDoctorParams,
+  type DoctorUndeclaredPolicy,
+} from './doctor'
+export { isLikelySystemOrToolEnvKey } from './system-env-ignore'
+export { unknownRecordToEnvSource } from './unknown-record-to-env-source'
 export { generateEnvExample, generateEnvironmentMd } from './generate'
 export {
   envraInternalSchema,
