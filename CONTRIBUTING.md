@@ -47,12 +47,12 @@ We **do not** use `NPM_TOKEN` in GitHub Actions. Releases use [npm Trusted Publi
 
 Trusted Publisher is configured **per package** on npm, but the **link is to one GitHub repo + one workflow file** (`release.yml`). For this repo you repeat the same publisher setup for each published package:
 
-| Package               | On npm → Package → Settings → Trusted publishing |
-| --------------------- | -------------------------------------------------- |
-| `@envra/core`         | GitHub: `hasansmadix/envra`, workflow `release.yml` |
-| `@envra/cli`          | same                                               |
-| `@envra/next`         | same                                               |
-| `@envra/eslint-plugin`| same                                               |
+| Package                | On npm → Package → Settings → Trusted publishing    |
+| ---------------------- | --------------------------------------------------- |
+| `@envra/core`          | GitHub: `hasansmadix/envra`, workflow `release.yml` |
+| `@envra/cli`           | same                                                |
+| `@envra/next`          | same                                                |
+| `@envra/eslint-plugin` | same                                                |
 
 All must live under an npm org/user that allows those publishes. The workflow filename must match **exactly** (e.g. `release.yml`, case-sensitive).
 
@@ -66,7 +66,7 @@ The Release job needs:
 
 #### Optional hardening (npm UI)
 
-After Trusted Publishing works, npm recommends restricting classic publish tokens for those packages. See npm docs: *Publishing access* → require 2FA / disallow tokens where appropriate.
+After Trusted Publishing works, npm recommends restricting classic publish tokens for those packages. See npm docs: _Publishing access_ → require 2FA / disallow tokens where appropriate.
 
 ### Release flow
 

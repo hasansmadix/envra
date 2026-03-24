@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { defineNextEnv } from './define-next-env'
+import { defineNextEnv, defineNextPublicEnv } from './define-next-env'
 import { str, url, secret } from '@envra/core'
 
 describe('defineNextEnv', () => {
@@ -22,7 +22,7 @@ describe('defineNextEnv', () => {
     expect(() =>
       defineNextEnv({
         server: {},
-        client: { NEXT_PUBLIC_X: secret(str()) } as never,
+        client: { NEXT_PUBLIC_X: secret(str()) },
         runtimeEnv: { NODE_ENV: 'test', NEXT_PUBLIC_X: 'a' },
       }),
     ).toThrow(/secret/)
@@ -36,5 +36,28 @@ describe('defineNextEnv', () => {
         runtimeEnv: { NODE_ENV: 'test', API_URL: 'https://x.com' },
       }),
     ).toThrow(/NEXT_PUBLIC_/)
+  })
+})
+
+describe('defineNextPublicEnv', () => {
+  it('validates client-only keys', () => {
+    const env = defineNextPublicEnv({
+      client: { NEXT_PUBLIC_APP_URL: url() },
+      runtimeEnv: {
+        NODE_ENV: 'test',
+        NEXT_PUBLIC_APP_URL: 'https://app.example',
+      },
+      profile: 'test',
+    })
+    expect(env.values.NEXT_PUBLIC_APP_URL).toBe('https://app.example')
+  })
+
+  it('rejects secret on client', () => {
+    expect(() =>
+      defineNextPublicEnv({
+        client: { NEXT_PUBLIC_X: secret(str()) },
+        runtimeEnv: { NODE_ENV: 'test', NEXT_PUBLIC_X: 'a' },
+      }),
+    ).toThrow(/secret/)
   })
 })

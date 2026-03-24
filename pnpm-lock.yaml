@@ -32,6 +32,9 @@ importers:
       '@envra/cli':
         specifier: workspace:*
         version: link:../../packages/cli
+      '@envra/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@envra/next':
         specifier: workspace:*
         version: link:../../packages/next
@@ -115,13 +118,13 @@ importers:
 
   packages/next:
     dependencies:
-      '@envra/core':
-        specifier: workspace:*
-        version: link:../core
       next:
         specifier: '>=14'
         version: 16.2.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     devDependencies:
+      '@envra/core':
+        specifier: workspace:*
+        version: link:../core
       '@types/node':
         specifier: ^22.10.2
         version: 22.19.15

@@ -38,7 +38,8 @@
     "node": ">=18"
   },
   "peerDependencies": {
-    "next": ">=14"
+    "next": ">=14",
+    "@envra/core": "^0.1.2"
   },
   "peerDependenciesMeta": {
     "next": {
@@ -49,10 +50,8 @@
     "build": "tsup",
     "test": "vitest run"
   },
-  "dependencies": {
-    "@envra/core": "workspace:*"
-  },
   "devDependencies": {
+    "@envra/core": "workspace:*",
     "@types/node": "^22.10.2",
     "tsup": "^8.3.5",
     "typescript": "~5.7.2",

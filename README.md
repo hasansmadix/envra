@@ -32,13 +32,13 @@ Not just parsing `process.env`: envra gives you a **contract** (metadata + types
 
 Config breaks in production for boring, repeatable reasons:
 
-| Problem                         | How envra helps                                      |
-| ------------------------------- | ---------------------------------------------------- |
-| Missing or mistyped keys        | Validated schema, clear errors                       |
-| Wrong formats                 | Built-in parsers (URL, int, bool, JSON, …)          |
-| Stale `.env.example`          | `envra sync` from the same schema                    |
-| Leaked secrets to the client  | `secret()`, `serverOnly()`, Next client rules          |
-| Drift between environments    | `envra doctor` (undeclared vars, typos, deprecations) |
+| Problem                      | How envra helps                                       |
+| ---------------------------- | ----------------------------------------------------- |
+| Missing or mistyped keys     | Validated schema, clear errors                        |
+| Wrong formats                | Built-in parsers (URL, int, bool, JSON, …)            |
+| Stale `.env.example`         | `envra sync` from the same schema                     |
+| Leaked secrets to the client | `secret()`, `serverOnly()`, Next client rules         |
+| Drift between environments   | `envra doctor` (undeclared vars, typos, deprecations) |
 
 Other libraries validate well; envra adds **generated docs**, **`.env.example` sync**, **`doctor` hygiene**, and a **rich result object** (`values`, `get`, `has`, `meta`) instead of a plain map.
 
@@ -101,12 +101,12 @@ Export `defineEnv` as `default` / `env`, or export field builders as `schema`, `
 
 **`--json`** on `check` / `doctor` prints machine-readable output for CI.
 
-| Command   | Use case                          |
-| --------- | --------------------------------- |
-| `check`   | CI / preflight — validate merged env |
-| `sync`    | Regenerate `.env.example`         |
-| `docs`    | Regenerate `ENVIRONMENT.md`      |
-| `doctor`  | Undeclared vars, typos, deprecations, profile rules |
+| Command  | Use case                                            |
+| -------- | --------------------------------------------------- |
+| `check`  | CI / preflight — validate merged env                |
+| `sync`   | Regenerate `.env.example`                           |
+| `docs`   | Regenerate `ENVIRONMENT.md`                         |
+| `doctor` | Undeclared vars, typos, deprecations, profile rules |
 
 ---
 
@@ -116,8 +116,10 @@ Export `defineEnv` as `default` / `env`, or export field builders as `schema`, `
 | ---------------------- | ----------------------------------------------------------------- |
 | `@envra/core`          | Schema DSL, `defineEnv`, validation, generators, `doctor` helpers |
 | `@envra/cli`           | `envra` binary                                                    |
-| `@envra/next`          | `defineNextEnv({ server, client, runtimeEnv })`                   |
+| `@envra/next`          | `defineNextEnv` / `defineNextPublicEnv`; **peer** `@envra/core` — see [packages/next/README](packages/next/README.md) |
 | `@envra/eslint-plugin` | `envra/no-process-env`                                            |
+
+Install Next adapter with **`pnpm add @envra/next @envra/core`** so one `@envra/core` version is used (avoids TypeScript `FieldBuilder` clashes). On pnpm, use `overrides` if duplicates appear — [packages/next/README.md](packages/next/README.md#pnpm--duplicate-envracore).
 
 ---
 

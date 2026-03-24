@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@envra/cli": "workspace:*",
+    "@envra/core": "workspace:*",
     "@envra/next": "workspace:*"
   }
 }
