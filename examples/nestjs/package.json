@@ -1,0 +1,9 @@
+{
+  "name": "envra-example-nestjs",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@envra/cli": "workspace:*",
+    "@envra/core": "workspace:*"
+  }
+}

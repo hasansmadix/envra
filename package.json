@@ -1,0 +1,26 @@
+{
+  "name": "envra-monorepo",
+  "private": true,
+  "packageManager": "pnpm@9.15.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hasansmadix/envra.git"
+  },
+  "homepage": "https://github.com/hasansmadix/envra#readme",
+  "bugs": {
+    "url": "https://github.com/hasansmadix/envra/issues"
+  },
+  "scripts": {
+    "build": "turbo run build --filter=\"./packages/*\"",
+    "test": "turbo run test --filter=\"./packages/*\"",
+    "lint": "turbo run lint --filter=\"./packages/*\"",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.10",
+    "turbo": "^2.3.3",
+    "typescript": "~5.7.2"
+  }
+}

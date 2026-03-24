@@ -1,0 +1,54 @@
+{
+  "name": "@envra/core",
+  "version": "0.1.0",
+  "description": "Define, validate, and safely consume runtime configuration in TypeScript",
+  "keywords": [
+    "env",
+    "environment",
+    "environment-variables",
+    "config",
+    "validation",
+    "typescript",
+    "nextjs",
+    "nodejs",
+    "12-factor",
+    "schema",
+    "eslint",
+    "type-safe",
+    "dotenv"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hasansmadix/envra.git",
+    "directory": "packages/core"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "~5.7.2",
+    "vitest": "^3.0.5"
+  }
+}

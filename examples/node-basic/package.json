@@ -1,0 +1,16 @@
+{
+  "name": "envra-example-node-basic",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "env:check": "envra check -c ./env.config.ts",
+    "env:sync": "envra sync -c ./env.config.ts -o .env.example",
+    "env:docs": "envra docs -c ./env.config.ts -o ENVIRONMENT.md",
+    "env:doctor": "envra doctor -c ./env.config.ts",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "@envra/cli": "workspace:*",
+    "@envra/core": "workspace:*"
+  }
+}

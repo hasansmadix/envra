@@ -1,0 +1,59 @@
+# Publishes @envra/* via npm Trusted Publishing (OIDC). No NPM_TOKEN.
+# Requirements: npm CLI ≥ 11.5.1, Node ≥ 22.14 — see https://docs.npmjs.com/trusted-publishers
+#
+# On npmjs.com, add a Trusted Publisher (GitHub Actions) on EACH package:
+#   repo: hasansmadix/envra  |  workflow: release.yml
+# GitHub-hosted runners only (no self-hosted for OIDC publish today).
+
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      # Trusted publishing: Node ≥ 22.14 and npm ≥ 11.5.1 (npm ships with Node may be older)
+      - uses: actions/setup-node@v4
+        with:
+          # npm trusted publishing requires Node ≥ 22.14; use current LTS/Current that satisfies it
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: npm CLI for OIDC trusted publishing (≥ 11.5.1)
+        run: npm install -g npm@^11.5.1
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Do not set NODE_AUTH_TOKEN / NPM_TOKEN — npm/pnpm publish uses OIDC from the job.
+      - name: Create Release Pull Request or Publish
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm run release
+          commit: 'chore: release packages'
+          title: 'chore: release packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

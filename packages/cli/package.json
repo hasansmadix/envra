@@ -1,0 +1,47 @@
+{
+  "name": "@envra/cli",
+  "version": "0.1.0",
+  "description": "CLI for envra: check, sync, docs, doctor",
+  "keywords": [
+    "env",
+    "cli",
+    "environment-variables",
+    "validation",
+    "typescript",
+    "devtools",
+    "ci",
+    "dotenv"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hasansmadix/envra.git",
+    "directory": "packages/cli"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "bin": {
+    "envra": "./dist/cli.js"
+  },
+  "files": ["dist"],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@envra/core": "workspace:*",
+    "commander": "^12.1.0",
+    "jiti": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsup": "^8.3.5",
+    "typescript": "~5.7.2",
+    "vitest": "^3.0.5"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "envra-example-next-app-router",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@envra/cli": "workspace:*",
+    "@envra/next": "workspace:*"
+  }
+}
